@@ -1,0 +1,17 @@
+bearerbox:
+  image: nguyendinhtrung141/kannel-1.4.4
+  hostname: bearerbox
+  command: bearerbox /etc/kannel/kannel.conf
+  volumes:
+    - ./kannel-conf:/etc/kannel
+    - ./log:/var/log/kannel
+
+smsbox:
+  image: nguyendinhtrung141/kannel-1.4.4
+  hostname: smsbox
+  command: smsbox /etc/kannel/smsbox.conf
+  links:
+    - bearerbox
+  volumes:
+    - ./kannel-conf:/etc/kannel
+    - ./log:/var/log/kannel
