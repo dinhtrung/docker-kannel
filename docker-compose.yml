@@ -2,6 +2,8 @@ bearerbox:
   image: nguyendinhtrung141/kannel-1.4.4
   hostname: bearerbox
   command: bearerbox /etc/kannel/kannel.conf
+  external_links:
+    - smppsim
   volumes:
     - ./kannel-conf:/etc/kannel
     - ./log:/var/log/kannel
@@ -12,6 +14,28 @@ smsbox:
   command: smsbox /etc/kannel/smsbox.conf
   links:
     - bearerbox
+  volumes:
+    - ./kannel-conf:/etc/kannel
+    - ./log:/var/log/kannel
+
+sqlbox:
+  image: nguyendinhtrung141/kannel-1.4.4:sqlbox
+  hostname: sqlbox
+  command: sqlbox /etc/kannel/sqlbox.conf
+  links:
+    - bearerbox
+  external_links:
+    - smsgw-db
+  volumes:
+    - ./kannel-conf:/etc/kannel
+    - ./log:/var/log/kannel
+
+sms2sqlbox:
+  image: nguyendinhtrung141/kannel-1.4.4
+  hostname: sms2sqlbox
+  command: smsbox /etc/kannel/sms2sqlbox.conf
+  links:
+    - sqlbox
   volumes:
     - ./kannel-conf:/etc/kannel
     - ./log:/var/log/kannel
