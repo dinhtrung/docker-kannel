@@ -1,0 +1,8 @@
+#! /bin/sh
+#
+# Created by configure
+
+'./configure' \
+'--with-kannel-dir=/home/dinhtrung/.local' \
+'--prefix=/home/dinhtrung/.local' \
+"$@"
