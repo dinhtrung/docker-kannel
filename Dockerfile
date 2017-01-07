@@ -1,8 +1,8 @@
-FROM centos:latest
+FROM alpine:latest
 
 MAINTAINER Trung Nguyen Dinh <nguyendinhtrung141@gmail.com>
 
-RUN yum -y install gcc make libxml2-devel byacc bison openssl-devel
+RUN apk update && apk add gcc g++ make libxml2-dev byacc bison openssl-dev
 ADD http://kannel.org/download/1.4.4/gateway-1.4.4.tar.gz gateway-1.4.4.tar.gz
 RUN tar xzf gateway-1.4.4.tar.gz
 WORKDIR gateway-1.4.4
