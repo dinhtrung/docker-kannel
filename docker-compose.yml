@@ -1,17 +1,27 @@
-bearerbox:
-  image: nguyendinhtrung141/kannel-1.4.4:alpine
-  hostname: bearerbox
-  command: bearerbox /etc/kannel/kannel.conf
-  volumes:
-    - ./kannel-conf:/etc/kannel
-    - ./log:/var/log/kannel
+version: '3'
 
-smsbox:
-  image: nguyendinhtrung141/kannel-1.4.4:alpine
-  hostname: smsbox
-  command: smsbox /etc/kannel/smsbox.conf
-  links:
-    - bearerbox
-  volumes:
-    - ./kannel-conf:/etc/kannel
-    - ./log:/var/log/kannel
+services:
+  bearerbox:
+    image: nguyendinhtrung141/kannel-1.4.4:alpine
+    hostname: bearerbox
+    command: bearerbox /etc/kannel/kannel.conf
+    volumes:
+      - ./kannel-conf:/etc/kannel
+      - ./log:/var/log/kannel
+    logging:
+      driver: none
+
+  smsbox:
+    image: nguyendinhtrung141/kannel-1.4.4:alpine
+    hostname: smsbox
+    command: smsbox /etc/kannel/smsbox.conf
+    links:
+      - bearerbox
+    ports:
+      - 13013:13013
+    volumes:
+      - ./kannel-conf:/etc/kannel
+      - ./log:/var/log/kannel
+    logging:
+      driver: none
+
